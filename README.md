@@ -6,7 +6,7 @@ In this repository will be multiple example projects.  Each project will attempt
 All of these projects will be in C++ using VEXcode Pro V5.  [Download that here](https://www.vexrobotics.com/vexcode-download).  
 
 ## How to Download Projects
-[You can download all of these projects here](https://github.com/3324-Supernova-Robotics/Example/archive/refs/heads/main.zip). 
+[You can download all of these projects here](https://github.com/EZ-Robotics/VEXcode-Tutorials/archive/refs/heads/main.zip). 
 
 ## Opening the Projects
 In VEXcode, go to `File` -> `Open` and navigate to your `Downloads` to find the `Example` folder.  Open this, and find the example project you are looking for.  
