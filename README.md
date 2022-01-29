@@ -1,5 +1,7 @@
 # Example VEXcode Pro V5 Projects
 
+#### Disclaimer:  This is still in development and the links will change.  This link will not, https://github.com/EZ-Robotics/VEXcode-Tutorials
+
 In this repository will be multiple example projects.  Each project will attempt to show how to use a different aspect of code, from how to set a motor selectors to feedback controllers and autonomous selectors.  
 
 ## Downloading VEXcode
