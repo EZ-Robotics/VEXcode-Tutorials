@@ -17,7 +17,7 @@ In VEXcode, go to `File` -> `Open` and navigate to your `Downloads` to find the 
 ### 3 - [Lift Control](Lift-Control)
 ### 4 - [Joystick Control](Joystick-Control)
 ### 5 - [Feedback Controller (P Controller)](Feedback-Controller)
-### 6 - [IMU](IMU P Controller)
+### 6 - [IMU P Controller](IMU)
 ### 7 - [Pneumatics](Pneumatics)
 ### 8 - [Screen Autonomous Selector](Autonomous-Selector)
 ### 9 - [Color Changing Screen Autonomous Selector](Autonomous-Selector2)
