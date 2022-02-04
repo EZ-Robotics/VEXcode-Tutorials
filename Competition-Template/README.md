@@ -6,4 +6,4 @@ All of your user control code goes in `void usercontrol(void) {}`, and all of yo
 
 Coding in a competition template is required for tournaments. 
 
-In practice to switch between `user` and `auton`, you can use a competition switch. 
+In practice to switch between `user` and `auton`, you can use a competition switch. Or through the controller you can select `Timed Run` and that will run autonomous for 15 seconds.

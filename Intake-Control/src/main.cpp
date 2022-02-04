@@ -2,15 +2,15 @@
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
 /*    Author:       Jess Zarchi                                               */
-/*    Created:      Fri Jan 7  2022                                           */
-/*    Description:  Pneumatics                                                */
+/*    Created:      Thu Feb 3  2022                                           */
+/*    Description:  Intake Control                                            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// cylinder             digital_out   A               
+// intake_motor         motor         1               
 // Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
@@ -22,6 +22,19 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+
+///
+// Set Motor Functions
+//  - this sets motors between -12000 and 12000.  i'm used to
+//  - -100 to 100, so the "scale" variable lets me use that as
+//  - inputs and scales it to -12000 to 12000
+///
+
+// Set voltage
+const int SCALE = 120;
+void set_intake(int input) {
+  intake_motor.spin(fwd, input*SCALE, voltageUnits::mV);
+}
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -79,13 +92,19 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    // If L1 is pressed..
+    // If L1 is pressed...
     if (Controller1.ButtonL1.pressing()) {
-      cylinder.set(true); // Set piston to true
+      set_intake(100); // move the motor forwards full power
     }
-    // If L2 is pressed..
+
+    // If L2 is pressed
     else if (Controller1.ButtonL2.pressing()) {
-      cylinder.set(false); // Set piston to false
+      set_intake(-100); // move the motor backwards at full power
+    }
+
+    // If no button is pressed
+    else {
+      set_intake(0); // don't move the motor
     }
 
     wait(20, msec); // Sleep the task for a short amount of time to

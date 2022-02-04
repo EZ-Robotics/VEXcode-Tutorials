@@ -8,7 +8,7 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-digital_out cylinder = digital_out(Brain.ThreeWirePort.A);
+motor intake_motor = motor(PORT1, ratio18_1, false);
 controller Controller1 = controller(primary);
 
 // VEXcode generated functions

@@ -3,7 +3,7 @@ using namespace vex;
 extern brain Brain;
 
 // VEXcode devices
-extern digital_out cylinder;
+extern motor intake_motor;
 extern controller Controller1;
 
 /**

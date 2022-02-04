@@ -2,16 +2,19 @@
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
 /*    Author:       Jess Zarchi                                               */
-/*    Created:      Fri Jan 7  2022                                           */
-/*    Description:  Pneumatics                                                */
+/*    Created:      Thu Feb 3  2022                                           */
+/*    Description:  Debugging                                                 */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// cylinder             digital_out   A               
 // Controller1          controller                    
+// left_front           motor         1               
+// left_back            motor         2               
+// right_front          motor         3               
+// right_back           motor         4               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -22,6 +25,14 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+// Set voltage
+const int SCALE = 120;
+void set_tank(int left, int right) {
+  left_front.spin(fwd, left*SCALE, voltageUnits::mV);
+  left_back.spin(fwd, left*SCALE, voltageUnits::mV);
+  right_front.spin(fwd, right*SCALE, voltageUnits::mV);
+  right_back.spin(fwd, right*SCALE, voltageUnits::mV);
+}
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -79,14 +90,29 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
 
-    // If L1 is pressed..
-    if (Controller1.ButtonL1.pressing()) {
-      cylinder.set(true); // Set piston to true
+    // Variables for the left and right joystick
+    int left_joy = Controller1.Axis3.value();
+    int right_joy = Controller1.Axis2.value();
+
+    //
+    // Joysticks don't always come back to 0 perfectly, so a programmed threshold makes driving easier.
+    //
+
+    // If the absolute value of left joy is less then 5...
+    if (abs(left_joy) < 5) {
+      left_joy = 0; // Set left_joy to 0
     }
-    // If L2 is pressed..
-    else if (Controller1.ButtonL2.pressing()) {
-      cylinder.set(false); // Set piston to false
+
+    // If the absolute value of right joy is less then 5...
+    if (abs(right_joy) < 5) {
+      right_joy = 0; // Set right_joy to 0
     }
+    
+    // Set the drive to left joy and right joy
+    set_tank(left_joy, right_joy);
+
+    // Print the left and right joystick values to terminal
+    printf("\nLeft: %i  Right: %i", left_joy, right_joy);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

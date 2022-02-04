@@ -2,16 +2,12 @@
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
 /*    Author:       Jess Zarchi                                               */
-/*    Created:      Fri Jan 7  2022                                           */
-/*    Description:  Pneumatics                                                */
+/*    Created:      Thu Feb 3  2022                                           */
+/*    Description:  Clipnum                                                   */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// cylinder             digital_out   A               
-// Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -22,6 +18,20 @@ using namespace vex;
 competition Competition;
 
 // define your global instances of motors and other devices here
+
+// This function takes an input and limits it to max and min. 
+//  If you run clipnum(1000, 50, -50); you'd get 50 as an output
+//  If you run clipnum(-1000, 50, -50); you'd get -50 as an output
+//  If you run clipnum(20, 50, -50); you'd get 20 as an output
+double clipnum(double input, double max, double min) {
+  if (input > max) {
+    return max;
+  }
+  else if (input < min) {
+    return min;
+  }
+  return input;
+}
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -39,6 +49,10 @@ void pre_auton(void) {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  
+  printf("\nclipnum(1000, 50, -50) = %f", clipnum(1000, 50, -50));
+  printf("\nclipnum(-1000, 50, -50) = %f", clipnum(-1000, 50, -50));
+  printf("\nclipnum(20, 50, -50) = %f", clipnum(20, 50, -50));
 }
 
 /*---------------------------------------------------------------------------*/
@@ -78,15 +92,6 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-
-    // If L1 is pressed..
-    if (Controller1.ButtonL1.pressing()) {
-      cylinder.set(true); // Set piston to true
-    }
-    // If L2 is pressed..
-    else if (Controller1.ButtonL2.pressing()) {
-      cylinder.set(false); // Set piston to false
-    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
