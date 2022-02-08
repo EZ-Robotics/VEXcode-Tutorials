@@ -13,7 +13,7 @@ After extracting the zip, in VEXcode, go to `File` -> `Open` and navigate to you
 
 ## Table of Contents 
 ### 1 - [Competition Template](Competition-Template)
-### 2 - [Motor and Controller Setup, Downloading Code and Updating Firmware](VEXcode-Baiscs)
+### 2 - [Motor and Controller Setup, Downloading Code and Updating Firmware](VEXcode-Basics)
 ### 3 - [Intake Control](Intake-Control) 
 ### 4 - [Pneumatics](Pneumatics)
 ### 5 - [Joystick Control](Joystick-Control)
