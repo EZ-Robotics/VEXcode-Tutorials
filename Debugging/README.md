@@ -6,7 +6,7 @@ This code is based off of the joystick control code.
 ## What is debugging?
 Your code will do what you tell it to do, literally.  
 
-At a competition, when you tell a team to "get on the field", we know that we want the teams robot on the field.  Code would take the instruction "get on the field" and step over the field wall and step on the field.  
+When you tell a team to "get on the field", we know that we want the teams to place their robots on the field.  Code would take the instruction "get on the field" and step over the field wall and step on the field.  
 
 Sometimes when we're coding, our robot isn't doing things we want it to be doing and we need to figure out where the issues are happening in our code.  One way to do that is by using `printf` statements to show us what variables are doing.  
 
