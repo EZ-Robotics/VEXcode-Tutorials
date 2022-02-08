@@ -1,8 +1,10 @@
 # VEXcode-Basics
 
-## Motor and Controller Setup
+This folder isn't a project, and is just a quick page on how to add motors and your controller to VEXcode, downloading code, and updating firmware.  
 
-This folder isn't a project, and is just a quick page on how to add motors and your controller to VEXcode.   
+---
+
+## Motor and Controller Setup 
 
 ### Controller  
 Select this icon in the top right corner.  This is out setup window.  
