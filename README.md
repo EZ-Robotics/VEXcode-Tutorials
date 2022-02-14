@@ -20,7 +20,7 @@ After extracting the zip, in VEXcode, go to `File` -> `Open` and navigate to you
 ### 6 - [Using `printf` for Debugging](Debugging)
 ### 7 - [One Button Toggle](Button-Toggle)
 ### 8 - [Set Limits for an Input](Clipnum)
-### 9 - [Ladder Lift Control With Built in PID](Lift-Control)
+### 9 - [Ladder Lift Control With Built in PID](Lift-Ladder)
 ### 10 - [Lift P Controller](Feedback-Controller)
 ### 11 - [IMU P Controller](IMU)
 ### 12 - [Converting Degrees to Inches](deg-to-inch)
