@@ -1,17 +1,17 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       Jess Zarchi                                               */
-/*    Created:      Fri Jan 7  2022                                           */
-/*    Description:  Lift Control                                              */
+/*    Author:       VEX                                                       */
+/*    Created:      Thu Sep 26 2019                                           */
+/*    Description:  Competition Template                                      */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
 // lift_motor           motor         1               
+// Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -23,17 +23,15 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
-///
-// Set Motor Functions
-//  - this sets motors between -12000 and 12000.  i'm used to
-//  - -100 to 100, so the "scale" variable lets me use that as
-//  - inputs and scales it to -12000 to 12000
-///
+// Include the std library for vectors
+#include <vector>
 
-// Set voltage
-const int SCALE = 120;
-void set_lift(int input) {
-  lift_motor.spin(fwd, input*SCALE, voltageUnits::mV);
+// Vector of heights that are encoder positions 
+const std::vector<int> lift_positions = {0, 100, 200};
+
+// Set lift using built in PID
+void set_lift_position  (int pos, int speed) { 
+  lift_motor.startRotateTo(pos, rotationUnits::deg, speed, velocityUnits::pct); 
 }
 
 /*---------------------------------------------------------------------------*/
@@ -82,30 +80,47 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+  int current = 1; // Current place in the vector
+  bool last_l1 = false; // Last L1
+  bool last_l2 = false; // Last L2
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
+    // Increasing through the ladder
+    if (Controller1.ButtonL1.pressing() and not last_l1) {
+      // If we're at the highest position in the ladder, set to the lowest
+      if (current == lift_positions.size()) {
+        current = 1;
+      }
+      // Otherwise, increase the position by 1
+      else {
+        current = current + 1;
+      }
+    }
+    last_l1 = Controller1.ButtonL1.pressing(); // Keep track of the last press
+
+    // Decreasing through the ladder
+    if (Controller1.ButtonL2.pressing() and not last_l2) {
+      // If we're at the lowest point in the ladder, set to the highest
+      if (current == 1) {
+        current = lift_positions.size();
+      }
+      // Otherwise, decrease the position by 1
+      else {
+        current = current - 1;
+      }
+    }
+    last_l2 = Controller1.ButtonL2.pressing(); // Keep track of the last press
+
+    // Set the position.  Because vectors start with 0, we need to set it to current - 1
+    set_lift_position(lift_positions[current-1], 200);
+
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-
-    // If L1 is pressed...
-    if (Controller1.ButtonL1.pressing()) {
-      set_lift(100); // move the motor forwards full power
-    }
-
-    // If L2 is pressed
-    else if (Controller1.ButtonL2.pressing()) {
-      set_lift(-100); // move the motor backwards at full power
-    }
-
-    // If no button is pressed
-    else {
-      set_lift(0); // don't move the motor
-    }
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

@@ -13,7 +13,7 @@ void set_intake(int input) {
 ## Button Toggle
 When we press a button, we want to flip a `boolean` (a variable that can be true or false) to the opposite of itself.  If it's currently true, we want it to be false and vice versa.  
 
-An issue we will run into is when the button is pressed, we don't want the `boolean` to flip every iteration the code runs.  We can demonstrate this happening with the code below.
+An issue we will run into is when the button is pressed, we don't want the `boolean` to flip every iteration the code runs, this is done by setting the bool to `not` itself.  We can demonstrate this happening with the code below.
 
 Opening `terminal` while running this code and holding the button, we will see every time it prints the value changes from `1` (true) to `0` (false) rapidly.  This is a bug, and we only want the boolean to toggle every new press.
 
@@ -33,7 +33,7 @@ void usercontrol(void) {
 
     // If L1 is pressed, set button_toggle to the opposite of itself
     if (Controller1.ButtonL1.pressing()) {
-      button_toggle = !button_toggle;
+      button_toggle = not button_toggle;
     }
 
     printf("\nBoolean: %i", button_toggle);
@@ -44,14 +44,14 @@ void usercontrol(void) {
 }
 ```
 
-To make the boolean toggle every new press, we can keep track of the previous state of the button and only switch the value of `button_toggle` when the last press is released. 
+To make the boolean toggle every new press, we can keep track of the previous state of the button and only switch the value of `button_toggle` when the last press is `false`. 
 
 Running the code below and checking `Terminal`, we will see that every new press the boolean changes from `1` (true) to `0` (false).  
 
 ```cpp
 void usercontrol(void) {
   bool button_toggle = false;
-  int last_press = 0;
+  bool last_press = false;
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
@@ -64,8 +64,8 @@ void usercontrol(void) {
     // ........................................................................
 
     // If L1 is pressed, set button_toggle to the opposite of itself
-    if (Controller1.ButtonL1.pressing() && last_press == 0) {
-      button_toggle = !button_toggle;
+    if (Controller1.ButtonL1.pressing() and not last_press) {
+      button_toggle = not button_toggle;
     }
     last_press = Controller1.ButtonL1.pressing();
 
@@ -84,7 +84,7 @@ This is just a simple if/else, and you can put anything you want here.  Setting 
 ```cpp
 void usercontrol(void) {
   bool button_toggle = false;
-  int last_press = 0;
+  bool last_press = false;
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
@@ -97,8 +97,8 @@ void usercontrol(void) {
     // ........................................................................
 
     // If L1 is pressed, set button_toggle to the opposite of itself
-    if (Controller1.ButtonL1.pressing() && last_press == 0) {
-      button_toggle = !button_toggle;
+    if (Controller1.ButtonL1.pressing() and not last_press) {
+      button_toggle = not button_toggle;
     }
     last_press = Controller1.ButtonL1.pressing();
 

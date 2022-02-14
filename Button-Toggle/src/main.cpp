@@ -79,10 +79,9 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-
 void usercontrol(void) {
   bool button_toggle = false;
-  int last_press = 0;
+  bool last_press = false;
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
@@ -95,8 +94,8 @@ void usercontrol(void) {
     // ........................................................................
 
     // If L1 is pressed, set button_toggle to the opposite of itself
-    if (Controller1.ButtonL1.pressing() && last_press == 0) {
-      button_toggle = !button_toggle;
+    if (Controller1.ButtonL1.pressing() and not last_press) {
+      button_toggle = not button_toggle;
     }
     last_press = Controller1.ButtonL1.pressing();
 
