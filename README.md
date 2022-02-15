@@ -5,6 +5,9 @@ In this repository will be multiple example projects.  Each project will attempt
 ## Downloading VEXcode
 All of these projects will be in C++ using VEXcode **Pro** V5.  [Download that here](https://www.vexrobotics.com/vexcode/install/v5), **scroll down** and find VEXcode **Pro** V5.  Download and run the installer.  
 
+## VEXcode Documentation
+Documenatoin is useful to find what functions are available to you.  The docs can be found here https://api.vexcode.cloud/v5/. 
+
 ## How to Download Projects
 [You can download all of these projects here](https://github.com/EZ-Robotics/VEXcode-Tutorials/archive/refs/heads/main.zip). 
 
