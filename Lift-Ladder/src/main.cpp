@@ -1,9 +1,9 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       VEX                                                       */
-/*    Created:      Thu Sep 26 2019                                           */
-/*    Description:  Competition Template                                      */
+/*    Author:       Jess Zarchi                                               */
+/*    Created:      Mon Feb 14  2022                                          */
+/*    Description:  Lift Ladder Controls                                      */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@
 // Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
-#include "vex.h"
+#include "vex.h" 
 
 using namespace vex;
 
@@ -23,11 +23,9 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
-// Include the std library for vectors
-#include <vector>
-
-// Vector of heights that are encoder positions 
-const std::vector<int> lift_positions = {0, 100, 200};
+// Array of heights that are encoder positions 
+const int NO_LIFT_POSITIONS = 4;
+const int lift_positions[NO_LIFT_POSITIONS] = {0, 100, 200, 300};
 
 // Set lift using built in PID
 void set_lift_position  (int pos, int speed) { 
@@ -80,7 +78,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  int current = 1; // Current place in the vector
+  int current = 0; // Current place in the array
   bool last_l1 = false; // Last L1
   bool last_l2 = false; // Last L2
   while (1) {
@@ -88,39 +86,34 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
+    // ........................................................................
+    // Insert user code here. This is where you use the joystick values to
+    // update your motors, etc.
+    // ........................................................................
+
     // Increasing through the ladder
     if (Controller1.ButtonL1.pressing() and not last_l1) {
+      // Increase current by 1
+      current = current + 1;
       // If we're at the highest position in the ladder, set to the lowest
-      if (current == lift_positions.size()) {
-        current = 1;
-      }
-      // Otherwise, increase the position by 1
-      else {
-        current = current + 1;
+      if (current >= NO_LIFT_POSITIONS) {
+        current = 0;
       }
     }
     last_l1 = Controller1.ButtonL1.pressing(); // Keep track of the last press
 
     // Decreasing through the ladder
     if (Controller1.ButtonL2.pressing() and not last_l2) {
+      // Decrease current by 1
+      current = current - 1;
       // If we're at the lowest point in the ladder, set to the highest
-      if (current == 1) {
-        current = lift_positions.size();
-      }
-      // Otherwise, decrease the position by 1
-      else {
-        current = current - 1;
+      if (current <= -1) {
+        current = NO_LIFT_POSITIONS - 1; // Because arrays index at 0, our max ladder position is NO_LIFT_POSITIONS - 1
       }
     }
-    last_l2 = Controller1.ButtonL2.pressing(); // Keep track of the last press
-
-    // Set the position.  Because vectors start with 0, we need to set it to current - 1
-    set_lift_position(lift_positions[current-1], 200);
-
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+    last_l2 = Controller1.ButtonL2.pressing(); // Keep track of the last 
+    
+    set_lift_position(lift_positions[current], 200);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

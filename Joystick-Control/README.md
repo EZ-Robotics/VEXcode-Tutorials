@@ -21,7 +21,7 @@ void set_tank(int left, int right) {
 ## User Control
 We could just use `set_tank(Controller1.Axis3.value(), Controller2.Axis2.value());` and call it a day, but the joysticks don't always come back perfectly to 0.  When this happens, the motors move very slowly forward when you want them to stop.  We can fix this with a programmed dead zone. 
 
-Using if statements, we can check when the absolute value of the joystick is less then 5.  When it is, we set `let_joy` or `right_joy` to `0` so the motors wouldn't move.  
+Using if statements, we can check when the absolute value of the joystick is less then 5.  When it is, we set `left_joy` or `right_joy` to `0` so the motors wouldn't move.  
 
 ```cpp
 void usercontrol(void) {
