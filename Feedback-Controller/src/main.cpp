@@ -26,13 +26,24 @@ void set_lift(int input) {
   lift_motor.spin(fwd, input*SCALE, voltageUnits::mV);
 }
 
+// Clipnum for speed paramter
+double clipnum(double input, double max, double min) {
+  if (input > max) {
+    return max;
+  }
+  else if (input < min) {
+    return min;
+  }
+  return input;
+}
+
 // Feedback controller
-void feedback(double target) {
+void feedback(double target, int speed) {
   double kP = 0.5; // kP (scaling number)
   int x = 0; // Timer for exit condition
   while (true) {
     double error = target - lift_motor.position(deg); // error = (target - current)
-    set_lift(error * kP); // Set motors to (error * kP)
+    set_lift(clipnum(error * kP, speed, -speed)); // Set motors to (error * kP) and limit the speed 
 
     // If the velocity of the motor is 0...
     if (lift_motor.velocity(pct) == 0) {
@@ -83,8 +94,8 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  feedback(360); // Spin the motor 1 full rotation
-  feedback(0);   // Spin the motor 1 full rotation backwards
+  feedback(360, 100); // Spin the motor 1 full rotation at full power
+  feedback(0, 50);   // Spin the motor 1 full rotation backwards at half power
 }
 
 /*---------------------------------------------------------------------------*/

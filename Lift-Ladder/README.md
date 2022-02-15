@@ -15,7 +15,7 @@ Increasing the ladder while in the third position will bring us to the fourth.  
 ```
 
 ## Prerequisites
-Understanding button toggles are necessary.  A motor named `lift_motor` and controller named `Controller`. 
+Understanding button toggles are necessary.  A motor named `lift_motor` and controller named `Controller1`. 
 
 ## Finding Encoder Values 
 Go to the `Devices` menu on your brain and select the motor your lift motor.  Click through the `18:1` section until it's the cartridge you're using (green, red, or blue).  Bring your lift all the way down, and press the `Degrees` box to zero your sensor.  Now raise your lift to the desired height(s) and keep note of all of them.  

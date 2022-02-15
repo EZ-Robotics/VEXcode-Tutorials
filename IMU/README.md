@@ -1,6 +1,8 @@
-# IMU
+# IMU P Controller
 
-[*Note: For a more in-depth PID paper, check this guide by George Gillard*](http://georgegillard.com/documents/2-introduction-to-pid-controllers)
+More information on PID:  
+[George Gillard's PID Guide](http://georgegillard.com/documents/2-introduction-to-pid-controllers)  
+[BLRS Wiki](https://wiki.purduesigbots.com/software/control-algorithms/pid-controller)
 
 We will change the feedback controller to work for turning using the IMU. 
 
@@ -18,27 +20,42 @@ void set_tank(int left, int right) {
   right_front.spin(fwd, right*SCALE, voltageUnits::mV);
   right_back.spin(fwd, right*SCALE, voltageUnits::mV);
 }
+```
 
-void feedback(double target) {
-  double kP = 0.5;
-  int x = 0;
+```cpp
+double clipnum(double input, double max, double min) {
+  if (input > max) {
+    return max;
+  }
+  else if (input < min) {
+    return min;
+  }
+  return input;
+}
+
+// Feedback controller
+void feedback(double target, int speed) {
+  double kP = 0.5; // kP (scaling number)
+  int x = 0; // Timer for exit condition
   while (true) {
-    double error = target - lift_motor.position(deg);
-    set_lift(error * kP);
+    double error = target - lift_motor.position(deg); // error = (target - current)
+    set_lift(clipnum(error * kP, speed, -speed)); // Set motors to (error * kP) and limit the speed 
 
+    // If the velocity of the motor is 0...
     if (lift_motor.velocity(pct) == 0) {
-      x+=10;
-      if (x >= 50) {
-        break;
+      x+=10; // Increase x by 10
+      if (x >= 50) { // If x is 50 (meaning the motors were at 0 for 50ms)...
+        break; // Break the while loop
       }
     } 
+    // If the velocity of the motor is not 0...
     else {
-      x = 0;
+      x = 0; // Reset the timer
     }
 
     wait(10, msec);
   }
-  set_lift(0);
+  set_lift(0); // Set the motors to 0 before exiting this function
 }
 ```
 
@@ -62,36 +79,38 @@ To make the `feedback` function work for turning, we need to replace `current` (
 
 The function should be renamed to `turn`.  
 
-Instead of `set_lift(error*kP);`, we want to point turn the robot by moving one side forward and one side backwards.  We can do this with `set_tank(error*kP, -error*kP);`.  
+Instead of `set_tank(error * kP, -error * kP);`, we want to point turn the robot by moving one side forward and one side backwards.  We will create an integer called `output` and set that equal to `clipnum(error * kP, speed, -speed);`.  Then we can set `output` and `-output`to the left and right side. 
 
-The exit condition should be replaced to `left_back`, and an added `&&` for checking `right_back` too.  
+The exit condition should be replaced to `left_back`, and an added `&&` for checking `right_back` too. 
 ```cpp
-void turn(double target) {
-  double kP = 0.5;
-  int x = 0;
+void turn(double target, int speed) {
+  double kP = 0.5; // kP (scaling number)
+  int x = 0; // Timer for exit condition
   while (true) {
-    double error = target - imu.rotation(deg);
-    set_tank(error * kP, -error * kP);
+    double error = target - imu.rotation(deg); // error = (target - current)
+    int output = clipnum(error * kP, speed, -speed);
+    set_tank(output, -output); // Set motors to (error * kP) and clip it to speed
 
+    // If the velocity of the left and right motors are 0...
     if (left_back.velocity(pct) == 0 && right_back.velocity(pct) == 0) {
-      x+=10;
-      if (x >= 50) {
-        break;
+      x+=10; // Increase x by 10
+      if (x >= 50) { // If x is 50 (meaning the motors were at 0 velocity for 50ms)...
+        break; // Break the while loop
       }
     } 
+    // If the velocity of the left and right motors are not 0...
     else {
-      x = 0;
+      x = 0; // Set the timer to 0
     }
 
     wait(10, msec);
   }
-  set_tank(0, 0);
+  set_tank(0, 0); // Make sure motors are off before leaving this function
 }
 
 void autonomous(void) {
-  turn(180); // Turns to face 180
-  turn(90);  // Turns to face 90
-  turn(0);   // Turns to face 0
+  turn(180, 50); // Turn 180 degrees at half poewr
+  turn(90, 100); // Turn 90 degrees at full power
 }
 ```
 

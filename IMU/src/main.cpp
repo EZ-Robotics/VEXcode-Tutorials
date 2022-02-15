@@ -35,13 +35,25 @@ void set_tank(int left, int right) {
   right_back.spin(fwd, right*SCALE, voltageUnits::mV);
 }
 
+// Clipnum for speed
+double clipnum(double input, double max, double min) {
+  if (input > max) {
+    return max;
+  }
+  else if (input < min) {
+    return min;
+  }
+  return input;
+}
+
 // Turn P loop
-void turn(double target) {
+void turn(double target, int speed) {
   double kP = 0.5; // kP (scaling number)
   int x = 0; // Timer for exit condition
   while (true) {
     double error = target - imu.rotation(deg); // error = (target - current)
-    set_tank(error * kP, -error * kP); // Set motors to (error * kP)
+    int output = clipnum(error * kP, speed, -speed);
+    set_tank(output, -output); // Set motors to (error * kP) and clip it to speed
 
     // If the velocity of the left and right motors are 0...
     if (left_back.velocity(pct) == 0 && right_back.velocity(pct) == 0) {
@@ -95,8 +107,8 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  turn(180);
-  turn(90);
+  turn(180, 50); // Tur 180 degrees at half poewr
+  turn(90, 100);  // Turn 90 degrees at full power
 }
 
 /*---------------------------------------------------------------------------*/

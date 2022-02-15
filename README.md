@@ -27,7 +27,5 @@ After extracting the zip, in VEXcode, go to `File` -> `Open` and navigate to you
 ### 13 - [Screen Autonomous Selector](Autonomous-Selector)
 ### 14 - [Color Changing Screen Autonomous Selector](Autonomous-Selector2)
 
-make new lift control that uses motor pid  
-
 ## Other Examples
 Check [Amogo](https://github.com/Unionjackjz1/HW-AMOGO-VEXCODE) and [Dogo](https://github.com/Unionjackjz1/HW-DOGO-VEXCODE) for another VEXcode V5 Pro example. 
