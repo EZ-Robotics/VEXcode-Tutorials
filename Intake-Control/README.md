@@ -22,7 +22,7 @@ When neither buttons are pressed, the motor will be set to 0 and stop moving.
 ```cpp
 void usercontrol(void) {
   // User control code here, inside the loop
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.

@@ -21,7 +21,7 @@ Opening `terminal` while running this code and holding the button, we will see e
 void usercontrol(void) {
   bool button_toggle = false;
   // User control code here, inside the loop
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -53,7 +53,7 @@ void usercontrol(void) {
   bool button_toggle = false;
   bool last_press = false;
   // User control code here, inside the loop
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -86,7 +86,7 @@ void usercontrol(void) {
   bool button_toggle = false;
   bool last_press = false;
   // User control code here, inside the loop
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.

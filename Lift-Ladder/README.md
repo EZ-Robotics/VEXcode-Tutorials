@@ -85,7 +85,7 @@ void usercontrol(void) {
   // User control code here, inside the loop
   int current = 0; // Current place in the array
   bool last_l1 = false; // Last L1
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -126,7 +126,7 @@ void usercontrol(void) {
   // User control code here, inside the loop
   int current = 0; // Current place in the array
   bool last_l2 = false; // Last L2
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -165,7 +165,7 @@ void usercontrol(void) {
   int current = 0; // Current place in the array
   bool last_l1 = false; // Last L1
   bool last_l2 = false; // Last L2
-  while (1) {
+  while (true) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
